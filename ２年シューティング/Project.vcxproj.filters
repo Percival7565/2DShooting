@@ -55,6 +55,9 @@
     <Filter Include="Src\Application\Enemy">
       <UniqueIdentifier>{f97ac653-5aab-4300-a3a8-e93583167c20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Enemy\EnemyA">
+      <UniqueIdentifier>{e7872d9d-96a1-4aef-aaa5-73e1df7b764a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -144,29 +147,32 @@
     <ClInclude Include="..\Library\strconv.h">
       <Filter>Library</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\main.h">
-      <Filter>Src\Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Scene.h">
-      <Filter>Src\Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Utility.h">
-      <Filter>Src\Application\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Player.h">
-      <Filter>Src\Application\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Src\Application\Bullet.h">
+    <ClInclude Include="Src\Application\Attack\Bullet.h">
       <Filter>Src\Application\Attack</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Enemy.h">
+    <ClInclude Include="Src\Application\Attack\Hit.h">
+      <Filter>Src\Application\Attack</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Enemy\BaseEnemy.h">
       <Filter>Src\Application\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Status.h">
+    <ClInclude Include="Src\Application\Player\Player.h">
       <Filter>Src\Application\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Src\Application\Hit.h">
-      <Filter>Src\Application\Attack</Filter>
+    <ClInclude Include="Src\Application\Player\Status.h">
+      <Filter>Src\Application\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\main.h">
+      <Filter>Src\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Scene.h">
+      <Filter>Src\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Scene\Utility.h">
+      <Filter>Src\Application\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Enemy\EnemyA\EnemyA.h">
+      <Filter>Src\Application\Enemy\EnemyA</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,29 +233,32 @@
     <ClCompile Include="src\System\Window\KdGameWindow.cpp">
       <Filter>Src\System\Window</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\main.cpp">
-      <Filter>Src\Application\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Scene.cpp">
-      <Filter>Src\Application\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Utility.cpp">
-      <Filter>Src\Application\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Player.cpp">
-      <Filter>Src\Application\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Src\Application\Bullet.cpp">
+    <ClCompile Include="Src\Application\Attack\Bullet.cpp">
       <Filter>Src\Application\Attack</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Enemy.cpp">
+    <ClCompile Include="Src\Application\Attack\Hit.cpp">
+      <Filter>Src\Application\Attack</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Enemy\BaseEnemy.cpp">
       <Filter>Src\Application\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Status.cpp">
+    <ClCompile Include="Src\Application\Player\Player.cpp">
       <Filter>Src\Application\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Src\Application\Hit.cpp">
-      <Filter>Src\Application\Attack</Filter>
+    <ClCompile Include="Src\Application\Player\Status.cpp">
+      <Filter>Src\Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\main.cpp">
+      <Filter>Src\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Scene.cpp">
+      <Filter>Src\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Scene\Utility.cpp">
+      <Filter>Src\Application\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Enemy\EnemyA\EnemyA.cpp">
+      <Filter>Src\Application\Enemy\EnemyA</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

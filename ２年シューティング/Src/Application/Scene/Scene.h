@@ -2,13 +2,14 @@
 
 #include "Utility.h"
 
-#include "Player.h"
+#include "../Player/Player.h"
 
-#include "Enemy.h"
+//#include "../Enemy/BaseEnemy.h"
+#include "../Enemy/EnemyA/EnemyA.h"
 
-#include "Hit.h"
+#include "../Attack/Hit.h"
 
-#include "Status.h"
+#include "../Player/Status.h"
 
 enum SceneType
 {
@@ -22,7 +23,7 @@ class Scene
 private:
 
 	C_Player m_player;
-	C_Enemy m_enemy;
+	std::vector<std::shared_ptr<C_EnemyA>> m_enemyAList;
 	C_Hit m_hit;
 	C_Status m_status;
 	
@@ -82,7 +83,7 @@ public:
 
 	//ƒQƒbƒ^[
 	C_Player* GetPlayer() { return &m_player; }
-	C_Enemy* GetEnemy() { return &m_enemy; }
+	//C_BaseEnemy* GetEnemy() { return &m_enemy; }
 
 	// GUIˆ—
 	void ImGuiUpdate();

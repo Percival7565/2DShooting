@@ -1,17 +1,20 @@
-#include"Scene.h"
-#include "Enemy.h"
+#include "EnemyA.h"
 
-void C_Enemy::Init()
+void C_EnemyA::Init()
 {
 	m_pos = { 200,0 };
 	frame = 0;
 	m_bFlg = true;
+
+	//敵
+	m_tex.Load("Texture/demo_enemy.png"); 
+	m_B_BulTex.Load("Texture/demo_bullet2.png");
 }
 
-void C_Enemy::Update()
+void C_EnemyA::Update()
 {
 	frame++;
-	
+
 	angle += 1.0f;
 	if (angle >= 350.0f)
 	{
@@ -35,9 +38,9 @@ void C_Enemy::Update()
 
 			tempBullet->Init();
 
-			tempBullet->SetTexture(m_pB_BulTex);
+			tempBullet->SetTexture(&m_B_BulTex);
 
-			tempBullet->Shot(m_pos,1);
+			tempBullet->Shot(m_pos, 1);
 
 			m_bulletList.push_back(tempBullet);	// push_back : 配列の末尾にデータを追加する
 
@@ -70,34 +73,23 @@ void C_Enemy::Update()
 			it++;
 		}
 	}
-	
+
 	m_tmat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
-	m_smat = Math::Matrix::CreateScale(-1,1,0);
+	m_smat = Math::Matrix::CreateScale(-1, 1, 0);
 	m_mat = m_smat * m_tmat;
 }
 
-void C_Enemy::Draw()
+void C_EnemyA::Draw()
 {
 	if (!m_bFlg)
 	{
 		return;
 	}
 
-	DrawImg(m_mat, m_pTex, { 0,0,64,64 }, 1.0f);
+	DrawImg(m_mat, &m_tex, { 0,0,64,64 }, 1.0f);
 
 	for (int b = 0; b < m_bulletList.size(); b++)
 	{
 		m_bulletList[b]->Draw(1);
 	}
-}
-
-HitStruct C_Enemy::GetObj()
-{
-	HitStruct m_Obj;
-	m_Obj.pos = m_pos;
-	m_Obj.rad = { 50,50 };
-	m_Obj.move = { 0,0 };
-	m_Obj.bActive = m_bFlg;
-
-	return HitStruct(m_Obj);
 }

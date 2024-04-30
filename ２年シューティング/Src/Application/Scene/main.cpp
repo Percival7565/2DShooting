@@ -245,6 +245,8 @@ void Application::Execute()
 			count = 0;
 		}
 
+		std::string titleBar = "Neon Shooting" + std::to_string(m_fps);
+		SetWindowTextA(m_window.GetWndHandle(), titleBar.c_str());
 	}
 
 	// ƒQ[ƒ€‰ğ•ú

@@ -76,20 +76,29 @@ void Scene::InitTitle()
 void Scene::DrawGame()
 {
 	m_player.Draw();
-	m_enemy.Draw();
+	for (auto& enemyA : m_enemyAList)
+	{
+		enemyA->Draw();
+	}
 	m_status.Draw();
 }
 
 void Scene::UpdateGame()
 {
 	m_player.Update();
-	m_enemy.Update();
+	for (auto& enemyA : m_enemyAList)
+	{
+		enemyA->Update();
+	}
 	m_status.Update();
 
-	if (m_hit.GetHitJet(m_player.GetObj(),m_enemy.GetObj()))
+	for (int i = 0; i < m_enemyAList.size(); i++)
 	{
-		m_player.SetFlg(false);
-		m_enemy.SetFlg(false);
+		if (m_hit.GetHitJet(m_player.GetObj(), m_enemyAList[i]->GetObj()))
+		{
+			m_player.SetFlg(false);
+			m_enemyAList[i]->SetFlg(false);
+		}
 	}
 
 	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
@@ -109,7 +118,7 @@ void Scene::UpdateGame()
 void Scene::InitGame()
 {
 	m_player.Init();
-	m_enemy.Init();
+	//m_enemyA[0]->Init();
 }
 
 void Scene::DrawResult()
@@ -164,6 +173,13 @@ void Scene::Init()
 	
 	InitResult();
 
+	
+	//C_EnemyA* enemyA = new C_EnemyA();
+	std::shared_ptr<C_EnemyA> tempEnemy = std::make_shared<C_EnemyA>();
+	tempEnemy->SetOwner(this);
+	tempEnemy->Init();
+	tempEnemy->SetPos({ 0,200 });
+	m_enemyAList.push_back(tempEnemy);
 
 	//画像読み込み
 
@@ -172,7 +188,7 @@ void Scene::Init()
 	m_player.SetTexture(&m_playerTex);
 
 	m_player.SetOwner(this);
-	m_enemy.SetOwner(this);
+	//m_enemyA[0]->SetOwner(this);
 	m_hit.SetOwner(this);
 
 	//弾
@@ -183,12 +199,8 @@ void Scene::Init()
 	
 	m_pBulletTex[0].Load("Texture/demo_bullet.png");
 	m_player.SetBulletTexture(&m_pBulletTex[0]);
-	m_pBulletTex[1].Load("Texture/demo_bullet2.png");
-	m_enemy.SetBulletTexture(&m_pBulletTex[1]);
-
-	//敵
-	m_enemyTex.Load("Texture/demo_enemy.png");
-	m_enemy.SetTexture(&m_enemyTex);
+	//m_pBulletTex[1].Load("Texture/demo_bullet2.png");
+	//m_enemyA[0]->SetBulletTexture(&m_pBulletTex[1]);
 
 	//ステータス
 	m_statusTex.Load("Texture/status.png");

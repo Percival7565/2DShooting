@@ -1,5 +1,5 @@
 #include "Bullet.h"
-#include "Utility.h"
+#include "../Scene/Utility.h"
 
 void C_Bullet::Init()
 {

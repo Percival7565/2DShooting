@@ -1,4 +1,4 @@
-#include "utility.h"
+#include "Utility.h"
 
 void DrawImg(Math::Matrix a_mat, KdTexture* a_tex, Math::Rectangle a_rect, float a_alpha)
 {

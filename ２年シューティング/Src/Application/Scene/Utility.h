@@ -71,16 +71,17 @@ namespace SCR
 	const float HfHeight = Height / 2;
 }
 
- //当たり判定用構造体 pos move rad bActive
+
+//当たり判定用構造体 pos move rad bActive
 struct HitStruct
 {
 	Math::Vector2 pos;
 	Math::Vector2 move;
 	Math::Vector2 rad;
 
-	
 	bool bActive;
 };
+
 
 // ==== 描画系関数 =============================
 
