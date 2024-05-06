@@ -32,13 +32,13 @@ protected:
 	KdTexture m_tex;	//画像
 	Math::Vector2 m_pos;//座標
 	Math::Matrix m_mat;		//行列
-	Math::Matrix m_tmat;	//行列
-	Math::Matrix m_smat;	//行列
+	Math::Matrix m_tmat;	//移動行列
+	Math::Matrix m_smat;	//拡大行列
 	bool m_bFlg;			//生死
 
 	KdTexture m_B_BulTex;	//画像
 
-	std::vector<C_Bullet*> m_bulletList;
+	//std::vector<C_Bullet*> m_bulletList;
 
 	Scene* m_pOwner;
 

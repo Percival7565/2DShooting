@@ -5,19 +5,21 @@ class C_Bullet
 public:
 	void Init();	//初期化
 	void Update();	//更新
-	void Draw(int bulletType);	//描画
+	void Draw();	//描画
 
 	void Shot(Math::Vector2 a_shotPos,int BulletType);	//発射処理
-
-	void Hit();		//当たった
 
 	//ゲッター(ほかのクラスへ値を持っていく)
 	const bool GetAlive();
 	const Math::Vector2 GetPos();
 	const float GetRadius();
 
+	int GetBulletType() { return m_bulletType; }
+
 	//セッター
 	void SetTexture(KdTexture* a_pTex) { m_pTex = a_pTex; }
+
+	void SetAlive(bool a_bAlive) { m_bAlive = a_bAlive; }
 
 private:
 	KdTexture* m_pTex;		//画像
@@ -29,6 +31,6 @@ private:
 
 	const float TEX_RADIUS = 8.0f;	//半径
 
-	int bulletType;
+	int m_bulletType;
 
 };

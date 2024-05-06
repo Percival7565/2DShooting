@@ -8,6 +8,7 @@ void C_Bullet::Init()
 	m_bAlive = false;
 	m_mat = Math::Matrix::Identity;
 	m_pTex = nullptr;
+	m_bulletType = 0;
 
 	//m_move.x = 25.0f;
 }
@@ -35,11 +36,11 @@ void C_Bullet::Update()
 	m_mat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 }
 
-void C_Bullet::Draw(int bulletType)
+void C_Bullet::Draw()
 {
 	if (!m_bAlive) return;	//ëÅä˙ÉäÉ^Å[Éì
 
-	switch (bulletType)
+	switch (m_bulletType)
 	{
 	case 0:
 		DrawImg(m_mat, m_pTex, { 0,0,7,7 }, 1.0f);
@@ -51,13 +52,14 @@ void C_Bullet::Draw(int bulletType)
 	//DrawImg(m_mat, m_pTex, { 0,0,7,7 }, 1.0f);
 }
 
-void C_Bullet::Shot(Math::Vector2 a_shotPos,int bulletType)
+void C_Bullet::Shot(Math::Vector2 a_shotPos,int BulletType)
 {
 	m_pos = a_shotPos;		//î≠éÀÇ≥ÇÍÇÈç¿ïW
 	m_bAlive = true;		//î≠éÀèÛë‘
 
+	m_bulletType = BulletType;
 
-	switch (bulletType)
+	switch (BulletType)
 	{
 	case 0:
 		m_move.x = 25.0f;
@@ -67,12 +69,6 @@ void C_Bullet::Shot(Math::Vector2 a_shotPos,int bulletType)
 		break;
 	}
 	
-}
-
-void C_Bullet::Hit()
-{
-	m_bAlive = false;
-
 }
 
 const bool C_Bullet::GetAlive()
@@ -87,6 +83,5 @@ const Math::Vector2 C_Bullet::GetPos()
 
 const float C_Bullet::GetRadius()
 {
-
 	return TEX_RADIUS;
 }

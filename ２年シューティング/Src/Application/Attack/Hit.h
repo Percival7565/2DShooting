@@ -12,14 +12,15 @@ public:
 
 	// セッター
 	void SetOwner(Scene* a_pOwner) { m_pOwner = a_pOwner; }
+	void SetPlayer(C_Player* a_player) { m_player = a_player; }
 
-	bool GetHitbullet(HitStruct b0,HitStruct b1);
+	void GetHitbullet();
 
-	bool GetHitJet(HitStruct player,HitStruct enemy);
+	void GetHitJet();
 
 private:
 
-
+	C_Player* m_player;
 	Scene* m_pOwner;
 
 };

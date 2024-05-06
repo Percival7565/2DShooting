@@ -1,14 +1,16 @@
 #include "EnemyA.h"
+#include "../../Scene/Scene.h"
 
 void C_EnemyA::Init()
 {
-	m_pos = { 200,0 };
+	//m_pos = { 0,0 };
 	frame = 0;
 	m_bFlg = true;
+	angle = 0;
 
 	//敵
-	m_tex.Load("Texture/demo_enemy.png"); 
-	m_B_BulTex.Load("Texture/demo_bullet2.png");
+	m_tex.Load("Texture/Enemy/demo_enemy.png"); 
+	m_B_BulTex.Load("Texture/Bullet/y_bullet.png");
 }
 
 void C_EnemyA::Update()
@@ -24,55 +26,61 @@ void C_EnemyA::Update()
 
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
-		m_pos.y++;
+		//m_pos.y++;
 	}
 
-	//弾の発射処理
-	if (frame >= 20)
+	if (m_bFlg)
 	{
-		//if ((GetAsyncKeyState(VK_SPACE) & 0x8000))
+
+		//弾の発射処理
+		if (frame % 20 == 0)
 		{
-			// m_bulletList[b].GetAlive==falseの時
+			//if ((GetAsyncKeyState(VK_SPACE) & 0x8000))
+			{
+				// m_bulletList[b].GetAlive==falseの時
 
-			C_Bullet* tempBullet = new C_Bullet();
+				//C_Bullet* tempBullet = new C_Bullet();
+				std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
-			tempBullet->Init();
+				tempBullet->Init();
 
-			tempBullet->SetTexture(&m_B_BulTex);
+				tempBullet->SetTexture(&m_B_BulTex);
 
-			tempBullet->Shot(m_pos, 1);
+				tempBullet->Shot(m_pos, 1);
 
-			m_bulletList.push_back(tempBullet);	// push_back : 配列の末尾にデータを追加する
+				//m_bulletList.push_back(tempBullet);	// push_back : 配列の末尾にデータを追加する
+				m_pOwner->AddBullet(tempBullet);
 
-			frame = 0;
+				//frame = 0;
+			}
 		}
 	}
 
-	for (int b = 0; b < m_bulletList.size(); b++)
-	{
-		m_bulletList[b]->Update();
-	}
+	//for (int b = 0; b < m_bulletList.size(); b++)
+	//{
+	//	m_bulletList[b]->Update();
+	//}
 
-	// 可変長配列をポインタ操作するイテレーター（リモコン）
-	// イテレーターは毛偏重配列のアドレスを格納できる
+	//// 可変長配列をポインタ操作するイテレーター（リモコン）
+	//// イテレーターは毛偏重配列のアドレスを格納できる
 
-	std::vector <C_Bullet*>::iterator it;	// 可変長配列
+	//std::vector <C_Bullet*>::iterator it;	// 可変長配列
 
-	it = m_bulletList.begin();	// 可変長配列の先頭アドレスを格納
+	//it = m_bulletList.begin();	// 可変長配列の先頭アドレスを格納
 
-	while (it != m_bulletList.end())
-	{
-		const bool bAlive = (*it)->GetAlive();
-		if (!bAlive)
-		{
-			delete (*it);
-			it = m_bulletList.erase(it);	// 箱を削除して削除する箱の次のアドレスをイテレーターに格納
-		}
-		else
-		{
-			it++;
-		}
-	}
+	//while (it != m_bulletList.end())
+	//{
+	//	const bool bAlive = (*it)->GetAlive();
+	//	if (!bAlive)
+	//	{
+	//		delete (*it);
+	//		it = m_bulletList.erase(it);	// 箱を削除して削除する箱の次のアドレスをイテレーターに格納
+	//	}
+	//	else
+	//	{
+	//		it++;
+	//	}
+	//}
 
 	m_tmat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 	m_smat = Math::Matrix::CreateScale(-1, 1, 0);
@@ -88,8 +96,4 @@ void C_EnemyA::Draw()
 
 	DrawImg(m_mat, &m_tex, { 0,0,64,64 }, 1.0f);
 
-	for (int b = 0; b < m_bulletList.size(); b++)
-	{
-		m_bulletList[b]->Draw(1);
-	}
 }

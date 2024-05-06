@@ -11,8 +11,8 @@ public:
 	void Update();
 	void Draw();
 
-	void SetTexture(KdTexture* a_pTex) { m_pTex = a_pTex;}
-	void SetBulletTexture(KdTexture* a_pTex) { m_pBulletTex = a_pTex; }
+	//void SetTexture(KdTexture* a_pTex) { m_pTex = a_pTex;}
+	//void SetBulletTexture(KdTexture* a_pTex) { m_pBulletTex = a_pTex; }
 	void SetFlg(bool a_bFlg) { m_bFlg = a_bFlg; }
 
 	void SetOwner(Scene* a_pOwner) { m_pOwner = a_pOwner; }
@@ -24,14 +24,15 @@ private:
 
 	int frame;
 
-	KdTexture* m_pTex;	//‰æ‘œ
+	KdTexture m_playerTex;	//‰æ‘œ
 	Math::Vector2 m_pos;//À•W
 	Math::Matrix m_mat;	//s—ñ
 	bool m_bFlg;
 
-	KdTexture* m_pBulletTex;	//‰æ‘œ
+	KdTexture m_BulletTex;	//‰æ‘œ
 
-	std::vector<C_Bullet*> m_bulletList;
+	//std::vector<C_Bullet*> m_bulletList;
+	
 
 	Scene* m_pOwner;
 

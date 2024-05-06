@@ -1,9 +1,9 @@
 #include "../Scene/Scene.h"
+
 #include "Hit.h"
 
 void C_Hit::Init()
 {
-
 
 }
 
@@ -15,39 +15,29 @@ void C_Hit::Draw()
 {
 }
 
-bool C_Hit::GetHitbullet(HitStruct b0, HitStruct b1)
+void C_Hit::GetHitbullet()
 {
-	/*C_Player* m_player = m_pOwner->GetPlayer();
-	C_Enemy* m_enemy = m_pOwner->GetEnemy();
-
-	float a = m_enemy->;
-	float b;
-
-	if ()
-	{
-
-	}*/
-
-	return false;
+	
+	
 }
 
-bool C_Hit::GetHitJet(HitStruct player, HitStruct enemy)
+void C_Hit::GetHitJet()
 {
-	//C_Player* m_player = m_pOwner->GetPlayer();
-	//C_BaseEnemy* m_enemy = m_pOwner->GetEnemy();
+	for (auto& obj : m_pOwner ->GetEnemyAList())
+	{
+		
+		// 座標対象 - 自分座標　= 対象へのベクトル
+		Math::Vector2 v;
+		v = obj->GetPos() - m_player->GetPos();
 
-	//float a = m_enemy->GetPos().x - m_player->GetPos().x;	//底辺
-	//float b = m_enemy->GetPos().y - m_player->GetPos().y;	//高さ
-	//float dist = sqrt(a * a + b * b);
+		// 球判定
+		if (v.Length() < 64.0f)
+		{
+			//obj->OnHit();
 
-	//if (dist <= 50)
-	//{
-	//	return true;
-	//}
-	//else
-	//{
-	//	return false;
-	//}
-
-	return false;
+			m_player->SetFlg(false);
+			obj->SetFlg(false);
+		}
+		
+	}
 }
