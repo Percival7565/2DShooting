@@ -7,6 +7,8 @@
 
 #include "../Player/Player.h"
 
+//#include "../Attack/Bullet.h"//していいのか？？？
+
 //#include "../Enemy/BaseEnemy.h"
 #include "../Enemy/EnemyA/EnemyA.h"
 
@@ -15,6 +17,9 @@
 #include "../Player/Status.h"
 #include "../Texture/Wave.h"
 #include "../Texture/Number.h"
+#include "../Player/Ability.h"
+
+
 
 enum SceneType
 {
@@ -36,6 +41,7 @@ private:
 	C_Status m_status;
 	C_Wave m_wave;
 	C_Number m_number;
+	C_Ability m_ability;
 
 	std::vector<std::shared_ptr<C_Bullet>> m_bulletList;
 	
@@ -43,17 +49,26 @@ private:
 	Math::Matrix matrix;
 
 	SceneType nowScene;
-	////タイトル
-	//float titleX;
-	//float titleY;
-	//Math::Color TitleColor;
 
-	//float gameX;
-	//float gameY;
+	//タイトル
+	int m_TitleCnt;
+	bool m_SceneChange;
+	KdTexture m_ChangeBlackTex;
+	Math::Matrix m_BlackMat;
+	float m_BlackAlpha;
+	float m_TitleOutAlphaA;
+	float m_TitleOutAlphaB;
 
-	////リザルト
-	//float resultX;
-	//float resultY;
+	//ゲーム
+	int m_GameFlow;
+	int m_GameFrame;
+
+	int m_WaveEnemyNum;
+
+	int m_EnemyFrame;
+
+	int m_NowWave;
+	
 
 	bool keyFlg;
 
@@ -68,6 +83,12 @@ private:
 
 	//フレーム数
 	int frame;
+
+	int Debug1;
+	int Debug2;
+	int Debug3;
+
+	
 
 public:
 
@@ -95,14 +116,21 @@ public:
 	void UpdateResult();
 	void InitResult();
 
+	void MakeEnemyA();
+
 	void PlayerBul_Enemy();
 	void EnemyBul_Player();
 
 	void Pause(bool a_pause);
 
+	void SetDebug1(int a_Debug) { Debug1 = a_Debug; }
+	void SetDebug2(int a_Debug) { Debug2 = a_Debug; }
+	void SetDebug3(int a_Debug) { Debug3 = a_Debug; }
+
 	//ゲッター
 	C_Player* GetPlayer() { return &m_player; }
 	//C_BaseEnemy* GetEnemy() { return &m_enemy; }
+	
 
 	// GUI処理
 	void ImGuiUpdate();

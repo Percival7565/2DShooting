@@ -12,6 +12,12 @@ public:
 	void Update();
 	void Draw();
 
+	void SetWaveNum(int a_num) { m_WaveNum = a_num; }
+
+	void SetWaveFlg(bool a_flg) { m_WaveFlg = a_flg; }
+
+	void SetWaveScale(Math::Vector2 a_sc) { m_sc = a_sc; }
+
 private:
 
 	C_Number m_number;
@@ -27,5 +33,12 @@ private:
 	Math::Matrix m_smat;
 
 	float m_waveAlpha;
+
+	int m_WaveNum;
+
+	bool m_WaveFlg;
+
+	KdTexture m_blindTex;
+	Math::Matrix m_Bmat;
 
 };

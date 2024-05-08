@@ -29,6 +29,7 @@ void Scene::Draw2D()
 void Scene::DrawTitle()
 {
 	m_back.Draw();
+	DrawImg(m_BlackMat, &m_ChangeBlackTex, { 0,0,1280,720 }, m_BlackAlpha);
 	m_title.Draw();
 	
 	//SHADER.m_spriteShader.DrawString(titleX, titleY, "タイトル画面", Math::Vector4(1, 1, 0, 1));
@@ -43,38 +44,68 @@ void Scene::UpdateTitle()
 		if (keyFlg == false)
 		{
 			keyFlg = true;
-			InitGame();
-			nowScene = SceneType::Game;
+			m_SceneChange = true;
+			
 		}
 	}
 	else
 	{
 		keyFlg = false;
 	}
-	/*if (GetAsyncKeyState(VK_RIGHT) & 0x8000)
+	
+	if (m_SceneChange)
 	{
-		titleX = titleX + 10;
+		m_TitleCnt++;
+		m_BlackAlpha += 0.008;
+
+		if (m_BlackAlpha >= 1.0f)
+		{
+			m_BlackAlpha = 1.0f;
+		}
+		
+		m_title.SetTakeFlg(false);
+
+		if (m_TitleCnt >= 100)
+		{
+			m_TitleOutAlphaA -= 0.005;
+			m_TitleOutAlphaB -= 0.005;
+
+			if (m_TitleOutAlphaA <= 0.0f)
+			{
+				m_TitleOutAlphaA = 0.0f;
+			}
+			if (m_TitleOutAlphaB <= 0.0f)
+			{
+				m_TitleOutAlphaB = 0.0f;
+			}
+
+			m_title.SetAalpha(m_TitleOutAlphaA);
+			m_title.SetBalpha(m_TitleOutAlphaB);
+		}
+		else
+		{
+			m_TitleOutAlphaA = m_title.GetAalpha();
+			m_TitleOutAlphaB = m_title.GetBalpha();
+		}
+
+		if (m_TitleCnt >= 180)
+		{
+			InitGame();
+			nowScene = SceneType::Game;
+		}
 	}
 
-	if (GetAsyncKeyState(VK_LEFT) & 0x8000)
-	{
-		titleX = titleX - 10;
-	}
-
-	if (GetAsyncKeyState(VK_UP) & 0x8000)
-	{
-		titleY = titleY + 10;
-	}
-
-	if (GetAsyncKeyState(VK_DOWN) & 0x8000)
-	{
-		titleY = titleY - 10;
-	}*/
+	m_BlackMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
 
 void Scene::InitTitle()
 {
 	m_title.Init();
+	m_TitleCnt = 0;
+	m_SceneChange = false;
+	m_BlackAlpha = 0.0f;
+	m_TitleOutAlphaA = 0.0f;
+	m_TitleOutAlphaB = 0.0f;
 }
 
 void Scene::DrawGame()
@@ -97,36 +128,77 @@ void Scene::DrawGame()
 	m_wave.Draw();
 	//デバッグ
 	//m_number.DrawLeft(123456,{0,0});
+	m_ability.Draw();
+
+	DrawImg(m_BlackMat, &m_ChangeBlackTex, { 0,0,1280,720 }, m_BlackAlpha);
 }
 
 void Scene::UpdateGame()
 {
-	m_back.Update();
+	
+	switch (m_GameFlow)
+	{
+	case 0:
+		m_GameFrame++;
 
-	//デバッグ
-	if (GetAsyncKeyState('P') & 0x8000)
-	{
-		Pause(true);
-	}
-	else
-	{
-		Pause(false);
-	}
-
-	if (!m_pauseFlg)
-	{
-		//デバッグ
-		if (GetAsyncKeyState('E') & 0x8000)
+		if (m_BlackAlpha < 0.0f)
 		{
-			std::shared_ptr<C_EnemyA> tempEnemy = std::make_shared<C_EnemyA>();
-			tempEnemy->SetOwner(this);
-			tempEnemy->Init();
-			//tempEnemy->SetPos({ 0.0f + (rand()%10 * 100),-200.0f });
-			tempEnemy->SetPos({ 500.0f,-200.0f });
-			m_enemyAList.push_back(tempEnemy);
+			m_BlackAlpha = 0.0f;
+		}
+		else
+		{
+
+			m_BlackAlpha -= 0.008;
 		}
 
-		m_player.Update();
+		/*if (m_GameFrame < 10)
+		{
+			m_wave.SetWaveScale({0,0});
+		}*/
+
+		if (m_GameFrame >= 80)
+		{
+			m_wave.SetWaveFlg(true);
+			m_wave.Update();
+		}
+		else
+		{
+			m_player.SetPos({ -500,0 });
+			//Pause(true);
+		}
+
+		if (m_GameFrame >= 240)
+		{
+			m_GameFlow = 1;
+			m_wave.SetWaveFlg(false);
+			m_player.SetPause(false);
+		}
+		else
+		{
+			m_player.SetPause(true);
+		}
+		break;
+	case 1:
+
+		m_back.Update();
+
+		if (m_EnemyFrame >= 100)
+		{
+			//デバッグ
+			//if (GetAsyncKeyState('E') & 0x8000)
+			{
+				MakeEnemyA();
+			}
+		}
+		else
+		{
+			m_EnemyFrame++;
+		}
+
+		//プレイヤーももともとここにいた
+		m_ability.Update();
+		
+
 		for (auto& enemyA : m_enemyAList)
 		{
 			enemyA->Update();
@@ -138,70 +210,107 @@ void Scene::UpdateGame()
 
 		m_hit.GetHitJet();
 
-		if (GetAsyncKeyState(VK_RETURN) & 0x8000)
-		{
-			if (keyFlg == false)
-			{
-				keyFlg = true;
-				InitResult();
-				nowScene = SceneType::Result;
-			}
-		}
-		else
-		{
-			keyFlg = false;
-		}
-
-
 
 		for (int b = 0; b < m_bulletList.size(); b++)
 		{
+			m_bulletList[b]->SetPlayerBulSizeLv(m_player.GetBulletSize());
 			m_bulletList[b]->Update();
 		}
 
-		//可変長配列をポインタ操作するイテレーター（リモコン）
-		//イテレーターは毛偏重配列のアドレスを格納できる
 
-		std::vector<std::shared_ptr<C_Bullet>>::iterator it;	// 可変長配列
+		break;
+	case 2:
+		
+		break;
+	default:
+		break;
+	}
 
-		it = m_bulletList.begin();	// 可変長配列の先頭アドレスを格納
+	
+	m_player.SetAbility(m_ability.GetSelectAbi());
+	m_player.Update();
+	if (m_player.GetZero())
+	{
+		m_ability.SetGetAbi(0);
+	}
 
-		while (it != m_bulletList.end())
+	std::vector<std::shared_ptr<C_Bullet>>::iterator it;
+
+	it = m_bulletList.begin();
+
+	while (it != m_bulletList.end())
+	{
+		const bool bAlive = (*it)->GetAlive();
+		if (!bAlive)
 		{
-			const bool bAlive = (*it)->GetAlive();
-			if (!bAlive)
-			{
-				//delete (*it);
-				it = m_bulletList.erase(it);	// 箱を削除して削除する箱の次のアドレスをイテレーターに格納
-			}
-			else
-			{
-				it++;
-			}
+			it = m_bulletList.erase(it);
+		}
+		else
+		{
+			it++;
 		}
 	}
-	m_wave.Update();
+
+	//デバッグ
+	if (GetAsyncKeyState('P') & 0x8000)
+	{
+		Pause(true);
+	}
+	else
+	{
+		Pause(false);
+	}
+	
+
+	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	{
+		if (keyFlg == false)
+		{
+			keyFlg = true;
+			InitResult();
+			nowScene = SceneType::Result;
+		}
+	}
+	else
+	{
+		keyFlg = false;
+	}
+
+	m_BlackMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
 
 void Scene::InitGame()
 {
+	m_NowWave = 0;
+
+	m_GameFlow = 0;
+	m_GameFrame = 0;
+
+	m_WaveEnemyNum = 0;
+	m_EnemyFrame = 0;
+
+	m_wave.Init();
+
 	m_player.Init();
 
 	m_status.Init();
 
-	m_wave.Init();
+	m_ability.Init();
+
+	//m_BlackAlpha = 1.0f;
+
 	//m_enemyA[0]->Init();
 
-	for (int i = 0; i < 10; i++)
-	{
-		//C_EnemyA* enemyA = new C_EnemyA();
-		std::shared_ptr<C_EnemyA> tempEnemy = std::make_shared<C_EnemyA>();
-		tempEnemy->SetOwner(this);
-		tempEnemy->Init();
-		tempEnemy->SetPos({ -300.0f + (i * 100.0f),200.0f});
-		//tempEnemy->SetPos({0,0});
-		m_enemyAList.push_back(tempEnemy);
-	}
+	//for (int i = 0; i < 10; i++)
+	//{
+	//	//C_EnemyA* enemyA = new C_EnemyA();
+	//	std::shared_ptr<C_EnemyA> tempEnemy = std::make_shared<C_EnemyA>();
+	//	tempEnemy->SetOwner(this);
+	//	tempEnemy->Init();
+	//	tempEnemy->SetPos({ 640.0f + (i * 100.0f),0.0f});
+	//	//tempEnemy->SetPos({0,0});
+	//	m_enemyAList.push_back(tempEnemy);
+	//}
 }
 
 void Scene::DrawResult()
@@ -230,6 +339,18 @@ void Scene::InitResult()
 {
 }
 
+void Scene::MakeEnemyA()
+{
+	std::shared_ptr<C_EnemyA> tempEnemy = std::make_shared<C_EnemyA>();
+	m_WaveEnemyNum++;
+	m_EnemyFrame = 0;
+	tempEnemy->SetOwner(this);
+	tempEnemy->Init();
+	//tempEnemy->SetPos({ 0.0f + (rand()%10 * 100),-200.0f });
+	tempEnemy->SetPos({ 500.0f,-200.0f });
+	m_enemyAList.push_back(tempEnemy);
+}
+
 void Scene::PlayerBul_Enemy()
 {
 	for (auto& bul : m_bulletList)
@@ -238,16 +359,20 @@ void Scene::PlayerBul_Enemy()
 		{
 			for (auto& enemy : GetEnemyAList())
 			{
-				Math::Vector2 v;
-				v = enemy->GetPos() - bul->GetPos();
-
-				if (v.Length() < 16.0f)
+				if (enemy->GetFlg())
 				{
-					bul->SetAlive(false);
+					Math::Vector2 v;
+					v = enemy->GetPos() - bul->GetPos();
 
-					enemy->SetFlg(false);
+					if (v.Length() < bul->GetPlayerBulSize())
+					{
+						bul->SetAlive(false);
+
+						enemy->SetFlg(false);
+
+						m_WaveEnemyNum--;
+					}
 				}
-
 			}
 		}
 	}
@@ -255,18 +380,21 @@ void Scene::PlayerBul_Enemy()
 
 void Scene::EnemyBul_Player()
 {
-	for (auto& bul : m_bulletList)
+	if (m_player.GetFlg())
 	{
-		if (bul->GetBulletType() > 0)//とりあえずプレイヤーの基本の弾以外
+		for (auto& bul : m_bulletList)
 		{
-			
-			Math::Vector2 v;
-			v = bul->GetPos() - m_player.GetPos();
-
-			if (v.Length() < 16.0f)
+			if (bul->GetBulletType() > 0)//とりあえずプレイヤーの基本の弾以外
 			{
-				m_player.SetFlg(false);
-				bul->SetAlive(false);
+
+				Math::Vector2 v;
+				v = bul->GetPos() - m_player.GetPos();
+
+				if (v.Length() < bul->GetEnemyBulSize())
+				{
+					m_player.SetFlg(false);
+					bul->SetAlive(false);
+				}
 			}
 		}
 	}
@@ -298,7 +426,6 @@ void Scene::Update()
 
 void Scene::Init()
 {
-
 	srand(timeGetTime());
 	
 	InitTitle();
@@ -310,6 +437,8 @@ void Scene::Init()
 	m_pauseFlg = false;
 
 	//画像読み込み
+
+	m_ChangeBlackTex.Load("Texture/Back/blind.png");
 
 	//自機
 	//m_playerTex.Load("Texture/demo_jet.png");
@@ -334,6 +463,10 @@ void Scene::Init()
 	//ステータス
 	//m_statusTex.Load("Texture/UI/status.png");
 	//m_status.SetTexture(&m_statusTex);
+
+	Debug1 = 0;
+	Debug2 = 0;
+	Debug3 = 0;
 }
 
 void Scene::Release()
@@ -343,7 +476,7 @@ void Scene::Release()
 
 void Scene::ImGuiUpdate()
 {
-	return;
+	//return;
 
 	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
 	ImGui::SetNextWindowSize(ImVec2(200, 100), ImGuiSetCond_Once);
@@ -352,6 +485,9 @@ void Scene::ImGuiUpdate()
 	if (ImGui::Begin("Debug Window"))
 	{
 		ImGui::Text("FPS : %d", APP.m_fps);
+		ImGui::Text("ABI0 : %d", Debug1);
+		ImGui::Text("ABI1 : %d", Debug2);
+		ImGui::Text("EnemyNum : %d", m_WaveEnemyNum);
 	}
 	ImGui::End();
 }

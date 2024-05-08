@@ -23,21 +23,22 @@ void C_Hit::GetHitbullet()
 
 void C_Hit::GetHitJet()
 {
-	for (auto& obj : m_pOwner ->GetEnemyAList())
+	for (auto& enemy : m_pOwner ->GetEnemyAList())
 	{
-		
-		// 座標対象 - 自分座標　= 対象へのベクトル
-		Math::Vector2 v;
-		v = obj->GetPos() - m_player->GetPos();
-
-		// 球判定
-		if (v.Length() < 64.0f)
+		if (enemy->GetFlg())
 		{
-			//obj->OnHit();
+			// 座標対象 - 自分座標　= 対象へのベクトル
+			Math::Vector2 v;
+			v = enemy->GetPos() - m_player->GetPos();
 
-			m_player->SetFlg(false);
-			obj->SetFlg(false);
+			// 球判定
+			if (v.Length() < 64.0f)
+			{
+				//obj->OnHit();
+
+				m_player->SetFlg(false);
+				enemy->SetFlg(false);
+			}
 		}
-		
 	}
 }

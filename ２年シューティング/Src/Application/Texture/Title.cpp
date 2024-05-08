@@ -15,52 +15,63 @@ void C_Title::Init()
 	m_neonTake = 0;
 	m_angle = 0;
 	m_Aalpha = 0.0f;
+	m_Balpha = 0.0f;
+	m_Bsinalpha = 0.0f;
+
+	m_TakeFlg = true;
 }
 
 void C_Title::Update()
 {
-	
-	switch (m_neonTake)
+	if (m_TakeFlg)
 	{
-	case 0:
-		m_Aalpha += 0.01f;
-		if (m_Aalpha >= 1.0f)
+		switch (m_neonTake)
 		{
+		case 0:
+			m_Aalpha += 0.01f;
+			if (m_Aalpha >= 1.0f)
+			{
+				m_Aalpha = 1.0f;
+				m_neonTake = 1;
+			}
+			break;
+		case 1:
+			m_angle += 1.0f;
+			if (m_angle >= 360.0f)
+			{
+				m_angle = 0.0f;
+			}
+
 			m_Aalpha = 1.0f;
-			m_neonTake = 1;
-		}
-		break;
-	case 1:
-		m_angle += 1.0f;
-		if (m_angle >= 360.0f)
-		{
-			m_angle = 0.0f;
+
+			if (rand() % 100 == 0)
+			{
+				m_neonTake = 2;
+			}
+			break;
+
+		case 2:
+			frame++;
+			if (frame >= 10)
+			{
+				m_Balpha = rand() % 7 * 0.1f;
+				frame = 0;
+			}
+
+			if (rand() % 100 <= 80)
+			{
+				m_neonTake = 1;
+			}
+
+
 		}
 
-		m_Aalpha = 1.0f;
-		
-		if (rand() % 100 == 0)
-		{
-			m_neonTake = 2;
-		}
-		break;
-
-	case 2:
-		frame++;
-		if (frame >= 10)
-		{
-			m_Balpha = rand() % 7 * 0.1f;
-			frame = 0;
-		}
-
-		if (rand() % 100 <= 80)
-		{
-			m_neonTake = 1;
-		}
-		
-
+		m_Bsinalpha = sin(DirectX::XMConvertToRadians(m_angle)) * 0.5f;
 	}
-
+	else
+	{
+		m_Bsinalpha -= 0.01f;
+	}
 	m_neonAMat = Math::Matrix::CreateTranslation(m_neonAPos.x, m_neonAPos.y, 0);
 	m_neonBMat = Math::Matrix::CreateTranslation(m_neonBPos.x, m_neonBPos.y, 0);
 	//m_neonCMat = Math::Matrix::CreateTranslation(m_neonCPos.x, m_neonCPos.y, 0);
@@ -68,7 +79,7 @@ void C_Title::Update()
 
 void C_Title::Draw()
 {
-	
+	D3D.SetBlendState(BlendMode::Add);
 
 	switch (m_neonTake)
 	{
@@ -77,7 +88,7 @@ void C_Title::Draw()
 		break;
 	case 1:
 		DrawImg(m_neonAMat, &m_neonATex, { 0,0,640,360 }, m_Aalpha);
-		DrawImg(m_neonBMat, &m_neonBTex, { 0,0,640,360 }, sin(DirectX::XMConvertToRadians(m_angle)) * 0.5f);
+		DrawImg(m_neonBMat, &m_neonBTex, { 0,0,640,360 }, m_Bsinalpha);
 		break;
 	case 2:
 		DrawImg(m_neonAMat, &m_neonATex, { 0,0,640,360 }, m_Aalpha);
@@ -93,5 +104,5 @@ void C_Title::Draw()
 	default:
 		break;
 	}
-	
+	D3D.SetBlendState(BlendMode::Alpha);
 }

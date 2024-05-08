@@ -6,14 +6,13 @@ void C_Back::Init()
 	m_skyTex.Load("Texture/Back/sky.png");
 	m_backATex.Load("Texture/Back/backA.png");
 	m_backBTex.Load("Texture/Back/backB.png");
+	m_blindTex.Load("Texture/Back/blind.png");
 
 	m_skyPos = {};
 	m_aPos[0] = {};
 	m_bPos[0] = {};
 	m_aPos[1] = {-1598,0};
 	m_bPos[1] = {-1709,0};
-
-
 }
 
 void C_Back::Update()
@@ -54,4 +53,6 @@ void C_Back::Draw()
 	{
 		DrawImg(m_bMat[b], &m_backBTex, { 0,0,1709,720 }, 1.0f);
 	}
+
+	DrawImg(m_skyMat, &m_blindTex, { 0,0,1280,720 }, 0.5f);
 }

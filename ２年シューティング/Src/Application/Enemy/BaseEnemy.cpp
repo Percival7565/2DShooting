@@ -3,7 +3,6 @@
 
 void C_BaseEnemy::Init()
 {
-	
 }
 
 void C_BaseEnemy::Update()

@@ -192,6 +192,9 @@
     <ClInclude Include="Src\Application\Player\Ability.h">
       <Filter>Src\Application\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Player\Funnel.h">
+      <Filter>Src\Application\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -291,6 +294,9 @@
       <Filter>Src\Application\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Src\Application\Player\Ability.cpp">
+      <Filter>Src\Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Player\Funnel.cpp">
       <Filter>Src\Application\Player</Filter>
     </ClCompile>
   </ItemGroup>

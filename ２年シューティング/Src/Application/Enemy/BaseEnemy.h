@@ -35,8 +35,21 @@ protected:
 	Math::Matrix m_tmat;	//移動行列
 	Math::Matrix m_smat;	//拡大行列
 	bool m_bFlg;			//生死
+	int m_enemyAnimeCnt;
+
+	int frame2;
+
+	KdTexture m_C_kasanTex;	//画像
 
 	KdTexture m_B_BulTex;	//画像
+
+	KdTexture m_spawnTex;	//画像
+	Math::Matrix m_spawnMat;		//行列
+	Math::Matrix m_tspawnMat;	//移動行列
+	Math::Matrix m_sspawnMat;	//拡大行列
+	int m_spawnAnimeCnt;
+
+	int frame3;
 
 	//std::vector<C_Bullet*> m_bulletList;
 
@@ -46,4 +59,8 @@ protected:
 
 	//お試し
 	int angle;
+
+	
+
+	
 };

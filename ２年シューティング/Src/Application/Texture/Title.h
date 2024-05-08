@@ -9,6 +9,16 @@ public:
 	void Init();
 	void Update();
 	void Draw();
+
+	void SetAalpha(int a_Aalpha) { m_Aalpha = a_Aalpha; }
+	void SetBalpha(int a_Balpha) { m_Balpha = a_Balpha; }
+
+	void SetTakeFlg(bool a_Flg) { m_TakeFlg = a_Flg; }
+
+	float GetAalpha() { return m_Aalpha; }
+	float GetBalpha() { return m_Balpha; }
+
+
 private:
 
 	int frame;
@@ -26,6 +36,8 @@ private:
 	Math::Matrix m_neonBMat;
 
 	float m_Balpha;
+	float m_Bsinalpha;
+
 
 	//O–³‚µ
 	/*KdTexture m_neonCTex;
@@ -35,4 +47,6 @@ private:
 	//“®‚«‚ð‚Â‚¯‚é
 	int m_neonTake;
 	int m_angle;
+
+	bool m_TakeFlg;
 };

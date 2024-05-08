@@ -5,12 +5,20 @@ void C_EnemyA::Init()
 {
 	//m_pos = { 0,0 };
 	frame = 0;
+	frame2 = 0;
+	frame3 = 0;
 	m_bFlg = true;
 	angle = 0;
 
 	//敵
-	m_tex.Load("Texture/Enemy/demo_enemy.png"); 
-	m_B_BulTex.Load("Texture/Bullet/y_bullet.png");
+	m_tex.Load("Texture/Enemy/enemy.png");
+	m_B_BulTex.Load("Texture/Bullet/enemy_bullet.png");
+	m_spawnTex.Load("Texture/Enemy/enemy_spawn.png");
+	m_C_kasanTex.Load("Texture/Kasan/kasan_color.png");
+
+	m_enemyAnimeCnt = 0;
+
+	m_spawnAnimeCnt = 0;
 }
 
 void C_EnemyA::Update()
@@ -22,69 +30,74 @@ void C_EnemyA::Update()
 	{
 		angle -= 360.0f;
 	}
-	m_pos.y = sin(DirectX::XMConvertToRadians(angle)) * 300;
+
+	//このコメントを外すと敵がサインカーブする
+	//m_pos.y = sin(DirectX::XMConvertToRadians(angle)) * 300 * 0.5f;
 
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
 		//m_pos.y++;
+		m_pos.x--;
 	}
+
+	//とりあえず
+	m_pos.x--;
 
 	if (m_bFlg)
 	{
 
 		//弾の発射処理
-		if (frame % 20 == 0)
+		if (frame >= 110)
 		{
-			//if ((GetAsyncKeyState(VK_SPACE) & 0x8000))
-			{
-				// m_bulletList[b].GetAlive==falseの時
 
-				//C_Bullet* tempBullet = new C_Bullet();
-				std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
+			std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
-				tempBullet->Init();
+			tempBullet->Init();
 
-				tempBullet->SetTexture(&m_B_BulTex);
+			tempBullet->SetTexture(&m_B_BulTex);
 
-				tempBullet->Shot(m_pos, 1);
+			tempBullet->Shot(m_pos, 1);
 
-				//m_bulletList.push_back(tempBullet);	// push_back : 配列の末尾にデータを追加する
-				m_pOwner->AddBullet(tempBullet);
+			//m_bulletList.push_back(tempBullet);	// push_back : 配列の末尾にデータを追加する
+			m_pOwner->AddBullet(tempBullet);
 
-				//frame = 0;
-			}
+			frame = 0;
+
 		}
 	}
 
-	//for (int b = 0; b < m_bulletList.size(); b++)
-	//{
-	//	m_bulletList[b]->Update();
-	//}
+	frame2++;
 
-	//// 可変長配列をポインタ操作するイテレーター（リモコン）
-	//// イテレーターは毛偏重配列のアドレスを格納できる
+	if (frame2 > 10)
+	{
+		m_enemyAnimeCnt++;
+		frame2 = 0;
+		if (m_enemyAnimeCnt >= 5)
+		{
+			m_enemyAnimeCnt = 0;
+		}
+	}
 
-	//std::vector <C_Bullet*>::iterator it;	// 可変長配列
+	frame3++;
 
-	//it = m_bulletList.begin();	// 可変長配列の先頭アドレスを格納
+	if (m_spawnAnimeCnt <= 4)
+	{
+		if (frame3 > 2)
+		{
+			m_spawnAnimeCnt++;
+			frame3 = 0;
+		}
+	}
 
-	//while (it != m_bulletList.end())
-	//{
-	//	const bool bAlive = (*it)->GetAlive();
-	//	if (!bAlive)
-	//	{
-	//		delete (*it);
-	//		it = m_bulletList.erase(it);	// 箱を削除して削除する箱の次のアドレスをイテレーターに格納
-	//	}
-	//	else
-	//	{
-	//		it++;
-	//	}
-	//}
+	//m_spawnAnimeCnt++;
 
 	m_tmat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
 	m_smat = Math::Matrix::CreateScale(-1, 1, 0);
 	m_mat = m_smat * m_tmat;
+	
+	m_tspawnMat = Math::Matrix::CreateTranslation(m_pos.x, m_pos.y, 0);
+	m_sspawnMat = Math::Matrix::CreateScale(2, 2, 0);
+	m_spawnMat = m_sspawnMat * m_tspawnMat;
 }
 
 void C_EnemyA::Draw()
@@ -94,6 +107,48 @@ void C_EnemyA::Draw()
 		return;
 	}
 
-	DrawImg(m_mat, &m_tex, { 0,0,64,64 }, 1.0f);
+	D3D.SetBlendState(BlendMode::Add);
+	DrawImg(m_spawnMat, &m_C_kasanTex, { 0,0,64,64 }, 1.0f);	//色付きの加算合成
+	D3D.SetBlendState(BlendMode::Alpha);
 
+	switch (m_enemyAnimeCnt)
+	{
+	case 0:
+		DrawImg(m_mat, &m_tex, { 0,0,64,64 }, 1.0f);
+		break;
+	case 1:
+		DrawImg(m_mat, &m_tex, { 64,0,64,64 }, 1.0f);
+		break;
+	case 2:
+		DrawImg(m_mat, &m_tex, { 128,0,64,64 }, 1.0f);
+		break;
+	case 3:
+		DrawImg(m_mat, &m_tex, { 192,0,64,64 }, 1.0f);
+		break;
+	case 4:
+		DrawImg(m_mat, &m_tex, { 256,0,64,64 }, 1.0f);
+		break;
+	}
+
+	D3D.SetBlendState(BlendMode::Add);
+
+	switch (m_spawnAnimeCnt)
+	{
+	case 0:
+		DrawImg(m_spawnMat, &m_spawnTex, { 0,0,64,64 }, 1.0f);
+		break;
+	case 1:
+		DrawImg(m_spawnMat, &m_spawnTex, { 64,0,64,64 }, 1.0f);
+		break;
+	case 2:
+		DrawImg(m_spawnMat, &m_spawnTex, { 128,0,64,64 }, 1.0f);
+		break;
+	case 3:
+		DrawImg(m_spawnMat, &m_spawnTex, { 192,0,64,64 }, 1.0f);
+		break;
+	case 4:
+		DrawImg(m_spawnMat, &m_spawnTex, { 256,0,64,64 }, 1.0f);
+		break;
+	}
+	D3D.SetBlendState(BlendMode::Alpha);
 }

@@ -14,6 +14,9 @@ private:
 
 	static const int m_backNum = 2;
 	
+	//Blind
+	KdTexture m_blindTex;//posやmatはスカイと共用
+
 	//Sky
 	KdTexture m_skyTex;
 	Math::Vector2 m_skyPos;

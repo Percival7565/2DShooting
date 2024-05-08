@@ -164,6 +164,7 @@
     <ClInclude Include="Src\Application\Enemy\BaseEnemy.h" />
     <ClInclude Include="Src\Application\Enemy\EnemyA\EnemyA.h" />
     <ClInclude Include="Src\Application\Player\Ability.h" />
+    <ClInclude Include="Src\Application\Player\Funnel.h" />
     <ClInclude Include="Src\Application\Player\Player.h" />
     <ClInclude Include="Src\Application\Player\Status.h" />
     <ClInclude Include="Src\Application\Scene\main.h" />
@@ -201,6 +202,7 @@
     <ClCompile Include="Src\Application\Enemy\BaseEnemy.cpp" />
     <ClCompile Include="Src\Application\Enemy\EnemyA\EnemyA.cpp" />
     <ClCompile Include="Src\Application\Player\Ability.cpp" />
+    <ClCompile Include="Src\Application\Player\Funnel.cpp" />
     <ClCompile Include="Src\Application\Player\Player.cpp" />
     <ClCompile Include="Src\Application\Player\Status.cpp" />
     <ClCompile Include="Src\Application\Scene\main.cpp" />
