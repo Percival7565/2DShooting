@@ -20,6 +20,7 @@ public:
 	void SetOwner(Scene* a_pOwner) { m_pOwner = a_pOwner; }
 	void SetFlg(bool a_bFlg) { m_bFlg = a_bFlg; }
 	void SetPos(Math::Vector2 a_pos) { m_pos = a_pos; }
+	void SetMoveType(int a_type) { m_enemyMoveType = a_type; }
 
 	Math::Vector2 GetPos() { return m_pos; }
 	bool GetFlg() { return m_bFlg; }
@@ -36,12 +37,13 @@ protected:
 	Math::Matrix m_smat;	//Šg‘ås—ñ
 	bool m_bFlg;			//¶€
 	int m_enemyAnimeCnt;
+	int m_enemyMoveType;
 
 	int frame2;
 
 	KdTexture m_C_kasanTex;	//‰æ‘œ
 
-	KdTexture m_B_BulTex;	//‰æ‘œ
+	KdTexture m_BulTex;	//‰æ‘œ
 
 	KdTexture m_spawnTex;	//‰æ‘œ
 	Math::Matrix m_spawnMat;		//s—ñ
@@ -50,6 +52,9 @@ protected:
 	int m_spawnAnimeCnt;
 
 	int frame3;
+	int frame4;
+
+	int m_DeathAnimeCnt;
 
 	//std::vector<C_Bullet*> m_bulletList;
 

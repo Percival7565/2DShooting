@@ -27,17 +27,98 @@ void C_Hit::GetHitJet()
 	{
 		if (enemy->GetFlg())
 		{
-			// 座標対象 - 自分座標　= 対象へのベクトル
-			Math::Vector2 v;
-			v = enemy->GetPos() - m_player->GetPos();
-
-			// 球判定
-			if (v.Length() < 64.0f)
+			if (m_player->GetFlg())
 			{
-				//obj->OnHit();
+				// 座標対象 - 自分座標　= 対象へのベクトル
+				Math::Vector2 v;
+				v = enemy->GetPos() - m_player->GetPos();
 
-				m_player->SetFlg(false);
-				enemy->SetFlg(false);
+				// 球判定
+				if (v.Length() < 64.0f)
+				{
+					//obj->OnHit();
+
+					//m_player->SetFlg(false);
+					m_player->SetHp(m_player->GetHp() - 1);
+					enemy->SetFlg(false);
+					//m_WaveEnemyNum--;
+					m_pOwner->SetEnemyNum(m_pOwner->GetEnemyNum() - 1);
+				}
+			}
+		}
+	}
+
+	for (auto& enemy : m_pOwner->GetEnemyBList())
+	{
+		if (enemy->GetFlg())
+		{
+			if (m_player->GetFlg())
+			{
+				// 座標対象 - 自分座標　= 対象へのベクトル
+				Math::Vector2 v;
+				v = enemy->GetPos() - m_player->GetPos();
+
+				// 球判定
+				if (v.Length() < 64.0f)
+				{
+					//obj->OnHit();
+
+					//m_player->SetFlg(false);
+					m_player->SetHp(m_player->GetHp() - 1);
+					enemy->SetFlg(false);
+					//m_WaveEnemyNum--;
+					m_pOwner->SetEnemyNum(m_pOwner->GetEnemyNum() - 1);
+				}
+			}
+		}
+	}
+
+	for (auto& enemy : m_pOwner->GetEnemyCList())
+	{
+		if (enemy->GetFlg())
+		{
+			if (m_player->GetFlg())
+			{
+				// 座標対象 - 自分座標　= 対象へのベクトル
+				Math::Vector2 v;
+				v = enemy->GetPos() - m_player->GetPos();
+
+				// 球判定
+				if (v.Length() < 64.0f)
+				{
+					//obj->OnHit();
+
+					//m_player->SetFlg(false);
+					m_player->SetHp(m_player->GetHp() - 1);
+					enemy->SetFlg(false);
+					//m_WaveEnemyNum--;
+					m_pOwner->SetEnemyNum(m_pOwner->GetEnemyNum() - 1);
+				}
+			}
+		}
+	}
+
+	for (auto& enemy : m_pOwner->GetEnemyDList())
+	{
+		if (enemy->GetFlg())
+		{
+			if (m_player->GetFlg())
+			{
+				// 座標対象 - 自分座標　= 対象へのベクトル
+				Math::Vector2 v;
+				v = enemy->GetPos() - m_player->GetPos();
+
+				// 球判定
+				if (v.Length() < 64.0f)
+				{
+					//obj->OnHit();
+
+					//m_player->SetFlg(false);
+					m_player->SetHp(m_player->GetHp() - 1);
+					enemy->SetFlg(false);
+					//m_WaveEnemyNum--;
+					m_pOwner->SetEnemyNum(m_pOwner->GetEnemyNum() - 1);
+				}
 			}
 		}
 	}

@@ -13,12 +13,19 @@ public:
 	void Draw();
 	void SelectAbility();
 	void SetGetAbi(int a_GetAbi) { m_GetAbi = a_GetAbi; }
+	void SetFrame(int a_frame) { frame = a_frame; }
+	void ReRoll();
 
 	int GetSelectAbi() { return m_GetAbi; }
+
+	bool GetCharFlg() { return m_DrawCharFlg; }
 
 	void Stop();
 
 private:
+
+	int frame;
+	int frame2;
 
 	C_Player m_player;
 
@@ -40,4 +47,6 @@ private:
 
 	int m_SelectAbi;
 	int m_GetAbi;
+
+	bool m_DrawCharFlg;
 };

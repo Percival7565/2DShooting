@@ -8,6 +8,7 @@ public:
 	void Draw();	//描画
 
 	void Shot(Math::Vector2 a_shotPos,int BulletType);	//発射処理
+	void Shot(Math::Vector2 a_shotPos,int BulletType,Math::Vector2 a_targetPos,float a_bulSpeed);	//発射処理のオーバーライド
 
 	const bool GetAlive();
 	const Math::Vector2 GetPos();
@@ -18,6 +19,9 @@ public:
 
 	//セッター
 	void SetTexture(KdTexture* a_pTex) { m_pTex = a_pTex; }
+
+	void SetColor(int a_color) { m_PlayerColor = a_color; }
+	void SetEnemyColor(int a_Ecolor) { m_EnemyColor = a_Ecolor; }
 
 	void SetAlive(bool a_bAlive) { m_bAlive = a_bAlive; }
 
@@ -39,6 +43,8 @@ private:
 	const float TEX_RADIUS = 8.0f;	//半径
 
 	int m_bulletType;
+	int m_PlayerColor;
+	int m_EnemyColor;
 
 	KdTexture m_kasanTex;
 

@@ -11,7 +11,7 @@ void C_Status::Init()
 void C_Status::Update()
 {
 	//デバッグ
-	if (GetAsyncKeyState('S') & 0x8000)
+	if (GetAsyncKeyState(VK_TAB) & 0x8000)
 	{
 		m_bFlg = true;
 	}

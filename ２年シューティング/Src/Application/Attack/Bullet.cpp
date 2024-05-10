@@ -83,12 +83,25 @@ void C_Bullet::Draw()
 	switch (m_bulletType)
 	{
 	case 0:
-		DrawImg(m_mat, &m_kasanTex, { 0,0,16,16 }, 1.0f);
-		DrawImg(m_mat, m_pTex, { 0,0,32,32 }, 0.5f);
-		break;
 	case 1:
+	case 2:
+	case 3:
+		
+		DrawImg(m_mat, m_pTex, { 0 + (32 * m_PlayerColor),0,32,32}, 0.5f);
+		DrawImg(m_mat, &m_kasanTex, { 0,0,16,16 }, 1.0f);
+		break;
+	case 4:
+	case 5:
+	case 6:
+	case 7:
+		
+		DrawImg(m_enemyMat, m_pTex, { 0 + (32 * m_EnemyColor),0,32,32 }, 0.5f);
 		DrawImg(m_enemyMat, &m_kasanTex, { 0,0,16,16 }, 1.0f);
+		break;
+	case 8:
+		
 		DrawImg(m_enemyMat, m_pTex, { 0,0,32,32 }, 0.5f);
+		DrawImg(m_enemyMat, &m_kasanTex, { 0,0,16,16 }, 1.0f);
 		break;
 	default:
 		break;
@@ -107,10 +120,57 @@ void C_Bullet::Shot(Math::Vector2 a_shotPos,int BulletType)
 	switch (BulletType)
 	{
 	case 0:
+	case 1:
+	case 2:
+	case 3:
 		m_move.x = 25.0f;
 		break;
-	case 1:
+	case 4:
+	case 5:
 		m_move.x = -10.0f;
+		break;
+	case 6:
+	case 7:
+		m_move.x = -20.0f;
+		break;
+	default:
+		break;
+	}
+}
+
+void C_Bullet::Shot(Math::Vector2 a_shotPos, int BulletType, Math::Vector2 a_targetPos, float a_bulSpeed)
+{
+	m_pos = a_shotPos;		//î≠éÀÇ≥ÇÍÇÈç¿ïW
+	m_bAlive = true;		//î≠éÀèÛë‘
+
+	m_bulletType = BulletType;
+
+	Math::Vector2 _pos;
+
+	_pos.x = a_targetPos.x - m_pos.x;
+	_pos.y = a_targetPos.y - m_pos.y;
+
+	float _rad = atan2(_pos.y,_pos.x);
+
+	switch (BulletType)
+	{
+	case 0:
+	case 1:
+	case 2:
+	case 3:
+		m_move.x = 25.0f;
+		break;
+	case 4:
+	case 5:
+		m_move.x = -10.0f;
+		break;
+	case 6:
+	case 7:
+		m_move.x = -20.0f;
+		break;
+	case 8:
+		m_move.x = cos(_rad) * a_bulSpeed;
+		m_move.y = sin(_rad) * a_bulSpeed;
 		break;
 	default:
 		break;

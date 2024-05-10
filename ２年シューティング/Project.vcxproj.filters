@@ -61,6 +61,15 @@
     <Filter Include="Src\Application\Texture">
       <UniqueIdentifier>{ea3ffce2-2a87-459b-ba3b-652941bd5a09}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Src\Application\Enemy\EnemyB">
+      <UniqueIdentifier>{f44ec187-7caf-43cd-b620-c9e2a6185ccd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Enemy\EnemyC">
+      <UniqueIdentifier>{004f7e05-68c9-4b9b-9312-0b11d7298d81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Application\Enemy\EnemyD">
+      <UniqueIdentifier>{4744e5de-8570-42fb-b40a-f8c2b8458b86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Pch.h">
@@ -195,6 +204,15 @@
     <ClInclude Include="Src\Application\Player\Funnel.h">
       <Filter>Src\Application\Player</Filter>
     </ClInclude>
+    <ClInclude Include="Src\Application\Enemy\EnemyB\EnemyB.h">
+      <Filter>Src\Application\Enemy\EnemyB</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Enemy\EnemyC\EnemyC.h">
+      <Filter>Src\Application\Enemy\EnemyC</Filter>
+    </ClInclude>
+    <ClInclude Include="Src\Application\Enemy\EnemyD\EnemyD.h">
+      <Filter>Src\Application\Enemy\EnemyD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Pch.cpp">
@@ -298,6 +316,15 @@
     </ClCompile>
     <ClCompile Include="Src\Application\Player\Funnel.cpp">
       <Filter>Src\Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Enemy\EnemyB\EnemyB.cpp">
+      <Filter>Src\Application\Enemy\EnemyB</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Enemy\EnemyC\EnemyC.cpp">
+      <Filter>Src\Application\Enemy\EnemyC</Filter>
+    </ClCompile>
+    <ClCompile Include="Src\Application\Enemy\EnemyD\EnemyD.cpp">
+      <Filter>Src\Application\Enemy\EnemyD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

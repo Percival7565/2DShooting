@@ -11,6 +11,9 @@
 
 //#include "../Enemy/BaseEnemy.h"
 #include "../Enemy/EnemyA/EnemyA.h"
+#include "../Enemy/EnemyB/EnemyB.h"
+#include "../Enemy/EnemyC/EnemyC.h"
+#include "../Enemy/EnemyD/EnemyD.h"
 
 #include "../Attack/Hit.h"
 
@@ -37,6 +40,9 @@ private:
 
 	C_Player m_player;
 	std::vector<std::shared_ptr<C_EnemyA>> m_enemyAList;
+	std::vector<std::shared_ptr<C_EnemyB>> m_enemyBList;
+	std::vector<std::shared_ptr<C_EnemyC>> m_enemyCList;
+	std::vector<std::shared_ptr<C_EnemyD>> m_enemyDList;
 	C_Hit m_hit;
 	C_Status m_status;
 	C_Wave m_wave;
@@ -59,6 +65,17 @@ private:
 	float m_TitleOutAlphaA;
 	float m_TitleOutAlphaB;
 
+	KdTexture m_PushEnterTex;
+	Math::Matrix m_PushMat;
+	float m_pushAlpha;
+
+	KdTexture m_RankTex;
+	Math::Matrix m_RankMat;
+	Math::Matrix m_RankSMat;
+	Math::Matrix m_RankTMat;
+	int m_rank;
+	float m_rankAlpha;
+
 	//ゲーム
 	int m_GameFlow;
 	int m_GameFrame;
@@ -68,29 +85,39 @@ private:
 	int m_EnemyFrame;
 
 	int m_NowWave;
-	
+	bool m_WavePlusFlg;
 
 	bool keyFlg;
 
 	bool m_pauseFlg;
 
-	KdTexture m_playerTex;
-	/*KdTexture m_pA_BulTex;
-	KdTexture m_pB_BulTex;*/
-	//KdTexture m_pBulletTex[10];
-	KdTexture m_enemyTex;
-	KdTexture m_statusTex;
+	int m_Time;
+	int m_TimeMinutes;
+	int m_Timeframe;
+
+	//リザルト
+	KdTexture m_GameOverTex;
+	Math::Matrix m_GameOverMat;
+	int resultframe;
 
 	//フレーム数
 	int frame;
+	int frame2;
+	int frame3;
 
 	int Debug1;
-	int Debug2;
-	int Debug3;
+	float Debug2;
+	Math::Vector2 Debug3;
 
 	
 
 public:
+
+	int pa = 0;
+	int pb = 0;
+	int pc = 0;
+	int pd = 0;
+	int pe = 0;
 
 	// 初期設定
 	void Init();
@@ -116,16 +143,24 @@ public:
 	void UpdateResult();
 	void InitResult();
 
-	void MakeEnemyA();
+	void MakeEnemyA(Math::Vector2 a_pos,int a_type);
+	void MakeEnemyB(Math::Vector2 a_pos, int a_type);
+	void MakeEnemyC(Math::Vector2 a_pos, int a_type);
+	void MakeEnemyD(Math::Vector2 a_pos, int a_type);
 
-	void PlayerBul_Enemy();
+	void PlayerBul_EnemyA();
+	void FunnelBul_Enemy();
 	void EnemyBul_Player();
 
 	void Pause(bool a_pause);
 
+	void SetEnemyNum(int a_num) { m_WaveEnemyNum = a_num; }
+
+	int GetEnemyNum() { return m_WaveEnemyNum; }
+
 	void SetDebug1(int a_Debug) { Debug1 = a_Debug; }
 	void SetDebug2(int a_Debug) { Debug2 = a_Debug; }
-	void SetDebug3(int a_Debug) { Debug3 = a_Debug; }
+	void SetDebug3(Math::Vector2 a_Debug) { Debug3 = a_Debug; }
 
 	//ゲッター
 	C_Player* GetPlayer() { return &m_player; }
@@ -143,6 +178,21 @@ public:
 	std::vector<std::shared_ptr<C_EnemyA>> GetEnemyAList()
 	{
 		return m_enemyAList;
+	}
+
+	std::vector<std::shared_ptr<C_EnemyB>> GetEnemyBList()
+	{
+		return m_enemyBList;
+	}
+
+	std::vector<std::shared_ptr<C_EnemyC>> GetEnemyCList()
+	{
+		return m_enemyCList;
+	}
+
+	std::vector<std::shared_ptr<C_EnemyD>> GetEnemyDList()
+	{
+		return m_enemyDList;
 	}
 
 private:

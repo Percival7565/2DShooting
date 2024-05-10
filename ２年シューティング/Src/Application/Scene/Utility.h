@@ -50,6 +50,19 @@ enum	// キーフラグ用
 	key_FlgEnd
 };
 
+enum BulletType
+{
+	PlayerRed,
+	PlayerBlue,
+	PlayerYellow,
+	PlayerGreen,
+	EnemyRed,
+	EnemyBlue,
+	EnemyYellow,
+	EnemyGreen,
+	Funnel,
+};
+
 // チップサイズなどの情報
 namespace Chip
 {

@@ -163,6 +163,9 @@
     <ClInclude Include="Src\Application\Attack\Hit.h" />
     <ClInclude Include="Src\Application\Enemy\BaseEnemy.h" />
     <ClInclude Include="Src\Application\Enemy\EnemyA\EnemyA.h" />
+    <ClInclude Include="Src\Application\Enemy\EnemyB\EnemyB.h" />
+    <ClInclude Include="Src\Application\Enemy\EnemyC\EnemyC.h" />
+    <ClInclude Include="Src\Application\Enemy\EnemyD\EnemyD.h" />
     <ClInclude Include="Src\Application\Player\Ability.h" />
     <ClInclude Include="Src\Application\Player\Funnel.h" />
     <ClInclude Include="Src\Application\Player\Player.h" />
@@ -201,6 +204,9 @@
     <ClCompile Include="Src\Application\Attack\Hit.cpp" />
     <ClCompile Include="Src\Application\Enemy\BaseEnemy.cpp" />
     <ClCompile Include="Src\Application\Enemy\EnemyA\EnemyA.cpp" />
+    <ClCompile Include="Src\Application\Enemy\EnemyB\EnemyB.cpp" />
+    <ClCompile Include="Src\Application\Enemy\EnemyC\EnemyC.cpp" />
+    <ClCompile Include="Src\Application\Enemy\EnemyD\EnemyD.cpp" />
     <ClCompile Include="Src\Application\Player\Ability.cpp" />
     <ClCompile Include="Src\Application\Player\Funnel.cpp" />
     <ClCompile Include="Src\Application\Player\Player.cpp" />
