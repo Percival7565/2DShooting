@@ -51,12 +51,13 @@ void Scene::UpdateTitle()
 		{
 			keyFlg = true;
 			m_SceneChange = true;
-			
+			m_sound.SE_Inst[se_Push]->Play();
 		}
 	}
 	else
 	{
 		keyFlg = false;
+		m_sound.SE_Inst[se_Push]->Stop();
 	}
 	
 	if (m_SceneChange)
@@ -97,6 +98,7 @@ void Scene::UpdateTitle()
 
 		if (m_TitleCnt >= 180)
 		{
+			m_sound.BGM_Inst[bgm_Title]->Stop();
 			InitGame();
 			nowScene = SceneType::Game;
 		}
@@ -112,6 +114,7 @@ void Scene::UpdateTitle()
 
 void Scene::InitTitle()
 {
+	m_sound.BGM_Inst[bgm_Title]->Play(true);
 	frame2 = 0;
 	m_pushAlpha = 0;
 	m_title.Init();
@@ -185,6 +188,7 @@ void Scene::DrawGame()
 
 void Scene::UpdateGame()
 {
+	
 
 	m_player.SetAbility(m_ability.GetSelectAbi());
 	m_player.Update();
@@ -215,13 +219,9 @@ void Scene::UpdateGame()
 
 		if (m_GameFrame >= 80)
 		{
+			
 			m_wave.SetWaveFlg(true);
 			m_wave.Update();
-		}
-		else
-		{
-			//m_player.SetPos({ -500,0 });
-			//Pause(true);
 		}
 
 		if (m_GameFrame >= 240)
@@ -229,6 +229,7 @@ void Scene::UpdateGame()
 			m_GameFlow = 1;
 			m_wave.SetWaveFlg(false);
 			m_player.SetPause(false);
+			m_sound.SE_Inst[se_Wave]->Play();
 		}
 		else
 		{
@@ -530,6 +531,8 @@ void Scene::UpdateGame()
 
 void Scene::InitGame()
 {
+	m_sound.BGM_Inst[bgm_Game]->Play(true);
+
 	m_NowWave = 1; 
 	m_WavePlusFlg = false;
 
@@ -640,14 +643,17 @@ void Scene::UpdateResult()
 	{
 		if (keyFlg == false)
 		{
+			m_sound.SE_Inst[se_Push]->Play();
 			keyFlg = true;
 			InitTitle();
-			InitGame();
+			//InitGame();
+			m_sound.BGM_Inst[bgm_Game]->Stop();
 			nowScene = SceneType::Title;
 		}
 	}
 	else
 	{
+		m_sound.SE_Inst[se_Push]->Stop();
 		keyFlg = false;
 	}
 }
@@ -727,6 +733,8 @@ void Scene::PlayerBul_EnemyA()
 
 						if (bul->GetBulletType() == PlayerRed)
 						{
+							m_sound.SE_Inst[se_Lost]->Play();
+
 							enemy->SetFlg(false);
 							m_WaveEnemyNum--;
 						}
@@ -747,6 +755,8 @@ void Scene::PlayerBul_EnemyA()
 
 						if (bul->GetBulletType() == PlayerBlue)
 						{
+							m_sound.SE_Inst[se_Lost]->Play();
+
 							enemy->SetFlg(false);
 							m_WaveEnemyNum--;
 						}
@@ -767,6 +777,8 @@ void Scene::PlayerBul_EnemyA()
 
 						if (bul->GetBulletType() == PlayerYellow)
 						{
+							m_sound.SE_Inst[se_Lost]->Play();
+
 							enemy->SetFlg(false);
 							m_WaveEnemyNum--;
 						}
@@ -787,6 +799,8 @@ void Scene::PlayerBul_EnemyA()
 
 						if (bul->GetBulletType() == PlayerGreen)
 						{
+							m_sound.SE_Inst[se_Lost]->Play();
+
 							enemy->SetFlg(false);
 							m_WaveEnemyNum--;
 						}
@@ -812,6 +826,8 @@ void Scene::FunnelBul_Enemy()
 
 					if (v.Length() < 32)
 					{
+						m_sound.SE_Inst[se_Lost]->Play();
+
 						bul->SetAlive(false);
 
 						enemy->SetFlg(false);
@@ -830,6 +846,8 @@ void Scene::FunnelBul_Enemy()
 
 					if (v.Length() < 32)
 					{
+						m_sound.SE_Inst[se_Lost]->Play();
+
 						bul->SetAlive(false);
 
 						enemy->SetFlg(false);
@@ -848,6 +866,8 @@ void Scene::FunnelBul_Enemy()
 
 					if (v.Length() < 32)
 					{
+						m_sound.SE_Inst[se_Lost]->Play();
+
 						bul->SetAlive(false);
 
 						enemy->SetFlg(false);
@@ -866,6 +886,8 @@ void Scene::FunnelBul_Enemy()
 
 					if (v.Length() < 32)
 					{
+						m_sound.SE_Inst[se_Lost]->Play();
+
 						bul->SetAlive(false);
 
 						enemy->SetFlg(false);
@@ -892,12 +914,18 @@ void Scene::EnemyBul_Player()
 
 				if (v.Length() < bul->GetEnemyBulSize())
 				{
+					m_sound.SE_Inst[se_Lost]->Play();
+
 					m_player.SetHp(m_player.GetHp() - 1);
 					bul->SetAlive(false);
 				}
 			}
 		}
 	}
+}
+
+void Scene::Exp_Effect()
+{
 }
 
 void Scene::Pause(bool a_pause)
@@ -926,13 +954,17 @@ void Scene::Update()
 
 void Scene::Init()
 {
+	m_sound.Init();
+
 	srand(timeGetTime());
 	
 	InitTitle();
 	
-	InitGame();
+	//InitGame();
 	
 	InitResult();
+
+	
 
 	m_pauseFlg = false;
 

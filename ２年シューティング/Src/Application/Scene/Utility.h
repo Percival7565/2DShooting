@@ -63,6 +63,25 @@ enum BulletType
 	Funnel,
 };
 
+enum se
+{
+	se_Shot,
+	se_Lost,
+	se_Push,
+	se_Roll,
+	se_Wave,
+
+	se_End
+};
+
+enum bgm
+{
+	bgm_Title,
+	bgm_Game,
+
+	bgm_End
+};
+
 // チップサイズなどの情報
 namespace Chip
 {

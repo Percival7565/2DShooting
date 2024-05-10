@@ -245,7 +245,7 @@ void Application::Execute()
 			count = 0;
 		}
 
-		std::string titleBar = "Neon fps::" + std::to_string(m_fps);
+		std::string titleBar = "NEON  fps:" + std::to_string(m_fps);
 		SetWindowTextA(m_window.GetWndHandle(), titleBar.c_str());
 	}
 

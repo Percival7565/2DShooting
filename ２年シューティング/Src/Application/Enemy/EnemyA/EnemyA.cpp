@@ -76,6 +76,8 @@ void C_EnemyA::Update()
 
 			std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
+			m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
+
 			tempBullet->Init();
 
 			tempBullet->SetTexture(&m_BulTex);
@@ -191,7 +193,7 @@ void C_EnemyA::Draw()
 		break;
 	}
 
-	if (!m_bFlg)
+	/*if (!m_bFlg)
 	{
 		switch (m_DeathAnimeCnt)
 		{
@@ -205,6 +207,6 @@ void C_EnemyA::Draw()
 			DrawImg(m_spawnMat, &m_spawnTex, { 0,0,64,64 }, 1.0f);
 			break;
 		}
-	}
+	}*/
 	D3D.SetBlendState(BlendMode::Alpha);
 }

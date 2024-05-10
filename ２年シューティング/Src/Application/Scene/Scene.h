@@ -22,7 +22,9 @@
 #include "../Texture/Number.h"
 #include "../Player/Ability.h"
 
+using namespace std;
 
+#include"../Sound/Sound.h"
 
 enum SceneType
 {
@@ -48,6 +50,7 @@ private:
 	C_Wave m_wave;
 	C_Number m_number;
 	C_Ability m_ability;
+
 
 	std::vector<std::shared_ptr<C_Bullet>> m_bulletList;
 	
@@ -113,6 +116,9 @@ private:
 
 public:
 
+
+	C_Sound m_sound;
+
 	int pa = 0;
 	int pb = 0;
 	int pc = 0;
@@ -151,6 +157,8 @@ public:
 	void PlayerBul_EnemyA();
 	void FunnelBul_Enemy();
 	void EnemyBul_Player();
+
+	void Exp_Effect();
 
 	void Pause(bool a_pause);
 

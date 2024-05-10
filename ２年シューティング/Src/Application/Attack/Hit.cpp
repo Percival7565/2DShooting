@@ -112,7 +112,7 @@ void C_Hit::GetHitJet()
 				if (v.Length() < 64.0f)
 				{
 					//obj->OnHit();
-
+					m_pOwner->m_sound.SE_Inst[se_Lost]->Play();
 					//m_player->SetFlg(false);
 					m_player->SetHp(m_player->GetHp() - 1);
 					enemy->SetFlg(false);

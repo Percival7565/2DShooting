@@ -173,6 +173,7 @@
     <ClInclude Include="Src\Application\Scene\main.h" />
     <ClInclude Include="Src\Application\Scene\Scene.h" />
     <ClInclude Include="Src\Application\Scene\Utility.h" />
+    <ClInclude Include="Src\Application\Sound\Sound.h" />
     <ClInclude Include="Src\Application\Texture\Back.h" />
     <ClInclude Include="Src\Application\Texture\Number.h" />
     <ClInclude Include="Src\Application\Texture\Title.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="Src\Application\Scene\main.cpp" />
     <ClCompile Include="Src\Application\Scene\Scene.cpp" />
     <ClCompile Include="Src\Application\Scene\Utility.cpp" />
+    <ClCompile Include="Src\Application\Sound\Sound.cpp" />
     <ClCompile Include="Src\Application\Texture\Back.cpp" />
     <ClCompile Include="Src\Application\Texture\Number.cpp" />
     <ClCompile Include="Src\Application\Texture\Title.cpp" />

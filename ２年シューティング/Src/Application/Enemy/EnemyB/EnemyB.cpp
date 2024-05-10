@@ -83,6 +83,8 @@ void C_EnemyB::Update()
 
 			std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
+			m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
+
 			tempBullet->Init();
 
 			tempBullet->SetTexture(&m_BulTex);

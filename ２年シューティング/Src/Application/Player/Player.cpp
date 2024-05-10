@@ -220,10 +220,15 @@ void C_Player::Update()
 			{
 				if ((GetAsyncKeyState(VK_SPACE) & 0x8000))
 				{
+
+					
+
 					if (m_plusbullet == 5)
 					{
 						//‚P‰ñ–Ú
 						std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
+
+						m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
 
 						tempBullet->Init();
 
@@ -295,6 +300,8 @@ void C_Player::Update()
 						//‚P‰ñ–Ú
 						std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
+						m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
+
 						tempBullet->Init();
 
 						tempBullet->SetTexture(&m_BulletTex);
@@ -354,6 +361,8 @@ void C_Player::Update()
 						//‚P‰ñ–Ú
 						std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
+						m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
+
 						tempBullet->Init();
 
 						tempBullet->SetTexture(&m_BulletTex);
@@ -402,6 +411,8 @@ void C_Player::Update()
 						//‚P‰ñ–Ú
 						std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
+						m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
+
 						tempBullet->Init();
 
 						tempBullet->SetTexture(&m_BulletTex);
@@ -439,6 +450,8 @@ void C_Player::Update()
 						//‚P‰ñ–Ú
 						std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
 
+						m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
+
 						tempBullet->Init();
 
 						tempBullet->SetTexture(&m_BulletTex);
@@ -463,6 +476,8 @@ void C_Player::Update()
 					else
 					{
 						std::shared_ptr<C_Bullet> tempBullet = std::make_shared<C_Bullet>();
+
+						m_pOwner->m_sound.SE_Inst[se_Shot]->Play();
 
 						tempBullet->Init();
 

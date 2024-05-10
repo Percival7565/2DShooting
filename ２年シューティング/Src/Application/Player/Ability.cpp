@@ -22,6 +22,8 @@ void C_Ability::Init()
 void C_Ability::Update()
 {
 	m_pos.y -= m_rollspead;
+
+	
 	
 	if (m_pos.y < -250)
 	{
@@ -50,6 +52,11 @@ void C_Ability::Update()
 	//デバッグ
 	frame++;
 	frame2++;
+
+	if (frame == 10)
+	{
+		SCENE.m_sound.SE_Inst[se_Roll]->Play();
+	}
 
 	//if (GetAsyncKeyState('R') & 0x8000)
 	if (frame>=150)
