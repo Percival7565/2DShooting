@@ -178,7 +178,7 @@ void Scene::DrawGame()
 
 	char text[200];
 	sprintf_s(text, sizeof(text), "%02d : %02d", m_TimeMinutes,m_Time);
-	SHADER.m_spriteShader.DrawString(400, 340, text, Math::Vector4(1, 1, 1, 1));
+	SHADER.m_spriteShader.DrawString(400, 320, text, Math::Vector4(1, 1, 1, 1));
 
 	//m_ability.Draw();
 }
@@ -243,10 +243,13 @@ void Scene::UpdateGame()
 
 		m_Time = m_Timeframe / 60;
 
+		//m_TimeMinutes = m_Timeframe / 60 / 60;
+
 		if (m_Time >= 60)
 		{
+			m_Timeframe = 0;
+			m_Time = 0;
 			m_TimeMinutes += 1;
-			m_Time -= 60;
 		}
 
 		if (m_EnemyFrame == 0)
@@ -281,7 +284,7 @@ void Scene::UpdateGame()
 				MakeEnemyA({ -100, 300 }, 1);
 				MakeEnemyC({ 300,-200 }, 1);
 				MakeEnemyC({ 300, 200 }, 1);
-				MakeEnemyC({ 300,-250 }, 1);
+				MakeEnemyC({ 300, 250 }, 1);
 				MakeEnemyC({ 300,-250 }, 1);
 				break;
 			case 6:
@@ -375,6 +378,15 @@ void Scene::UpdateGame()
 		{
 			m_EnemyFrame++;
 		}
+
+		if (GetAsyncKeyState('E') & 0x8000)
+		{
+			m_player.SetFlg(false);
+		}
+		else
+		{
+			m_player.SetFlg(true);
+		}
 		
 
 		if (!m_player.GetFlg())
@@ -425,6 +437,8 @@ void Scene::UpdateGame()
 			InitResult();
 			nowScene = SceneType::Result;
 		}
+
+		
 		
 		if (!m_WavePlusFlg)
 		{
@@ -436,10 +450,10 @@ void Scene::UpdateGame()
 			m_wave.Init();
 			m_wave.SetWaveNum(m_NowWave);
 
-			/*if (m_player.GetHp() < 5)
+			if (m_player.GetHp() < 5)
 			{
-				m_player.SetHp(m_player.GetHp() += 1);
-			}*/
+				m_player.SetHp(m_player.GetHp() + 1);
+			}
 			
 			m_WavePlusFlg = true;
 			
@@ -497,7 +511,7 @@ void Scene::UpdateGame()
 	}
 	
 
-	if (GetAsyncKeyState(VK_RETURN) & 0x8000)
+	/*if (GetAsyncKeyState(VK_RETURN) & 0x8000)
 	{
 		if (keyFlg == false)
 		{
@@ -509,7 +523,7 @@ void Scene::UpdateGame()
 	else
 	{
 		keyFlg = false;
-	}
+	}*/
 
 	m_BlackMat = Math::Matrix::CreateTranslation(0, 0, 0);
 }
@@ -965,7 +979,7 @@ void Scene::Release()
 
 void Scene::ImGuiUpdate()
 {
-	//return;
+	return;
 
 	ImGui::SetNextWindowPos(ImVec2(20, 20), ImGuiSetCond_Once);
 	ImGui::SetNextWindowSize(ImVec2(200, 200), ImGuiSetCond_Once);
